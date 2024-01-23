@@ -23,7 +23,7 @@ class PostAdmin(admin.ModelAdmin):
     form = PostAdminForm
     prepopulated_fields = {'slug': ('title',)}
     search_fields = ['title']
-    list_filter = ['category']
+    list_filter = ['category', 'tags']
     
     list_display = ['id', 'title', 'slug', 'category', 'created_at', 'get_photo']
 

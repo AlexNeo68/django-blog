@@ -42,15 +42,16 @@ class CategoryPostListView(ListView):
 
 
 class TagPostListView(ListView):
-    template_name = 'blog/category.html'
+    template_name = 'blog/tag.html'
     context_object_name = 'posts'
     paginate_by = 2
     allow_empty = False
 
-    # def get_queryset(self):
-    #     return Post.objects.filter(category__slug=self.kwargs['slug'])
+    def get_queryset(self):
+        return Post.objects.filter(tags__slug=self.kwargs['slug'])
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context["title"] = Category.objects.get(slug=self.kwargs['slug'])
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        tag = Tag.objects.get(slug=self.kwargs['slug'])
+        context["title"] = f'Посты по тегу: {tag.title}'
+        return context
