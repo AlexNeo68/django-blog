@@ -1,3 +1,4 @@
+from pyexpat import model
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView
@@ -12,12 +13,24 @@ class HomeView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = 'Классический дизайн блога :: '
+        context["title"] = 'Классический дизайн блога'
         return context
 
 class PostDetailView(DetailView):
     model = Post
     
+    
 
-def category(request, slug):
-    return render(request, 'blog/category.html')
+class CategoryPostListView(ListView):
+    template_name = 'blog/category.html'
+    context_object_name = 'posts'
+    paginate_by = 2
+    allow_empty = False
+
+    def get_queryset(self):
+        return Post.objects.filter(category__slug=self.kwargs['slug'])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = Category.objects.get(slug=self.kwargs['slug'])
+        return context
