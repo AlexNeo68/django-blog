@@ -18,8 +18,13 @@ class HomeView(ListView):
 
 class PostDetailView(DetailView):
     model = Post
-    
-    
+    template_name = 'blog/single.html'
+    context_object_name = 'post'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # context[""] = 
+        return context
 
 class CategoryPostListView(ListView):
     template_name = 'blog/category.html'
@@ -34,3 +39,18 @@ class CategoryPostListView(ListView):
         context = super().get_context_data(**kwargs)
         context["title"] = Category.objects.get(slug=self.kwargs['slug'])
         return context
+
+
+class TagPostListView(ListView):
+    template_name = 'blog/category.html'
+    context_object_name = 'posts'
+    paginate_by = 2
+    allow_empty = False
+
+    # def get_queryset(self):
+    #     return Post.objects.filter(category__slug=self.kwargs['slug'])
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context["title"] = Category.objects.get(slug=self.kwargs['slug'])
+    #     return context
