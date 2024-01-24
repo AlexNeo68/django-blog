@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+{% load search_form %}
+
+{% block title %}
+{{title}} :: {{ block.super }}
+{% endblock title %}
+
+{% block content %}
+
+<section class="blog-post-area">
+    <div class="container">
+        <div class="row">
+            {% show_search_form text_search %}
+        </div>
+        <div class="row">
+            <div class="blog-post-area-style">
+                    {% for post in posts %}
+                        <div class="col-md-3">
+                            <div class="single-post">
+                                
+                                {% if post.photo %}
+                                    <img src="{{post.photo.url}}" alt="{{post.title}} ">
+                                {% else %}
+                                    <img src="https://placehold.co/228x228" alt="{{post.title}}">
+                                {% endif %}
+
+                                <h3><a href="{{post.get_absolute_url}}">{{post.title}}</a></h3>
+                                <h4><span>Posted By: <span class="author-name">{{post.author}}</span></span>
+                                </h4>
+                                <p>{{post.content|truncatewords_html:20|striptags}}</p>
+                                <h4><span>{{post.created_at|date:'d.m.Y H:m'}}</span></h4>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <h3 class="error">Посты не найдены</h3>
+                    {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {% include "inc/_pagination.html" %}
+
+    
+</section>
+{% endblock  %}

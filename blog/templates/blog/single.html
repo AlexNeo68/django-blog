@@ -2,6 +2,7 @@
 {% load static %}
 {% load popular_posts %}
 {% load tags_cloud %}
+{% load search_form %}
 
 {% block title %}
 {{post.title}} :: {{ block.super }}
@@ -126,15 +127,8 @@
                 {% show_popular_posts 5 %}
 
                 {% show_tags_cloud %}
-                                
                 
-                <div class="newsletter">
-                    <h2 class="sidebar-title">Subscribe To oUR nEWSLETTER</h2>
-                    <form action="#" method="post">
-                        <input type="email" name="" id="" placeholder="Email">
-                        <input type="submit" value="Subscribe">
-                    </form>
-                </div>
+                {% show_search_form %}
             </div>
             </div>
             </div>

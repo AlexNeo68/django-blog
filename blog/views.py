@@ -58,3 +58,18 @@ class TagPostListView(ListView):
         tag = Tag.objects.get(slug=self.kwargs['slug'])
         context["title"] = f'Посты по тегу: {tag.title}'
         return context
+
+class SearchPostListView(ListView):
+    template_name = 'blog/search_page.html'
+    context_object_name = 'posts'
+    paginate_by = 2
+
+    def get_queryset(self):
+        return Post.objects.filter(title__icontains=self.request.GET.get('text_search'))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["text_search"] = self.request.GET.get('text_search')
+        context['search_param'] = f"&text_search={self.request.GET.get('text_search')}"
+        context['title'] = "Поиск по постам"
+        return context

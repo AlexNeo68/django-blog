@@ -42,11 +42,13 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # local
     "blog.apps.BlogConfig",
+    "categorytree.apps.CategorytreeConfig",
 
     # 3rd
     "debug_toolbar",
     "ckeditor",
     "ckeditor_uploader",
+    "mptt",
 ]
 
 MIDDLEWARE = [
