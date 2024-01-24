@@ -1,4 +1,5 @@
 from pyexpat import model
+from django.db.models import F
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView
@@ -23,7 +24,9 @@ class PostDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context[""] = 
+        self.object.views = F('views') + 1
+        self.object.save()
+        self.object.refresh_from_db()
         return context
 
 class CategoryPostListView(ListView):

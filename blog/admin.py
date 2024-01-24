@@ -25,7 +25,7 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ['title']
     list_filter = ['category', 'tags']
     
-    list_display = ['id', 'title', 'slug', 'category', 'created_at', 'get_photo']
+    list_display = ['id', 'title', 'slug', 'category', 'created_at', 'get_photo', 'views']
 
     list_display_links = ['id', 'title']
 
